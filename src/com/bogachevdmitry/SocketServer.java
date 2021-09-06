@@ -18,16 +18,11 @@ public class SocketServer {
                 String message;
                 while (true) {
                     message = in.readUTF();
-
-                    if (message.equalsIgnoreCase("disconnect")) {
-                        break;
-                    }
-
-                    System.out.printf("I've got a message %s from client!\n", message);
-                    System.out.println("Sending back the same to you...");
+                    System.out.printf("I've got a message `%s` from client!\n", message);
+                    System.out.println("Sending back the same to the client...");
                     out.writeUTF(message);
                     out.flush();
-                    System.out.println("Send me something else!\n");
+                    System.out.println("Ready to get new message!\n");
                 }
 
             }
