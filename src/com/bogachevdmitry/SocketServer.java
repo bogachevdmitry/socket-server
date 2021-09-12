@@ -21,10 +21,10 @@ public class SocketServer {
                 Socket socket = serverSocket.accept();
 
                 try {
-                    serverList.add(new SocketServerService(socket));
+                    SocketServerService socketServerService = new SocketServerService(socket);
+                    socketServerService.start();
+                    serverList.add(socketServerService);
                 } catch (IOException e) {
-                    socket.close();
-                } finally {
                     socket.close();
                 }
 

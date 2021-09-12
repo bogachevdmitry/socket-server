@@ -5,13 +5,12 @@ import java.net.Socket;
 
 public class SocketServerService extends Thread {
 
-    private final BufferedReader in;
-    private final BufferedWriter out;
+    private final DataInputStream in;
+    private final DataOutputStream out;
 
     public SocketServerService(Socket socket) throws IOException {
-        in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-        out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
-        start();
+        in = new DataInputStream(socket.getInputStream());
+        out = new DataOutputStream(socket.getOutputStream());
     }
 
     @Override
@@ -20,7 +19,7 @@ public class SocketServerService extends Thread {
         try {
 
             while(true) {
-                message = in.readLine();
+                message = in.readUTF();
                 if (message.equalsIgnoreCase("q:")) {
                     break;
                 }
@@ -37,7 +36,7 @@ public class SocketServerService extends Thread {
 
     private void send(String message) {
         try {
-            out.write(message + "\n");
+            out.writeUTF(message);
             out.flush();
         } catch (IOException e) {
             e.printStackTrace();
